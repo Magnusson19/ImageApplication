@@ -52,8 +52,8 @@ public class Inicialitzar_DB_lab2 extends HttpServlet {
           
           statement.executeUpdate("drop table if exists imagenes");
           
-          statement.executeUpdate("create table imagenes (id_imagen int primary key, titulo string, descripcion string," 
-                                + "palabras_clave string, autor string, fecha_creacion string, nombre string, fecha_alta string)");
+          statement.executeUpdate("create table imagenes (id_imagen int primary key, titulo string, fecha_creacion string," 
+                                + "autor string, palabras_clave string)");
           
           statement.executeUpdate("insert into imagenes values (1,'A','1111-01-01', 'Nil','Prova')");
           
