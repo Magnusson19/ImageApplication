@@ -5,6 +5,9 @@
  */
 package org.me.image;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -16,23 +19,23 @@ import javax.jws.WebParam;
  */
 @WebService(serviceName = "ImageWS")
 public class ImageWS {
+    
+    DB_Statements DB_S = new DB_Statements();
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "RegisterImage")
-    public int RegisterImage(@WebParam(name = "image") ImageWS image) {
-        //TODO write your implementation code here:
-        return 0;
+    public int RegisterImage(@WebParam(name = "image") Imagen image) {
+        return DB_S.Insert(image);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "ModifyImage")
-    public int ModifyImage(@WebParam(name = "image") ImageWS image) {
-        //TODO write your implementation code here:
-        return 0;
+    public int ModifyImage(@WebParam(name = "image") Imagen image) {
+        return DB_S.Update(image);
     }
 
     /**
@@ -40,7 +43,23 @@ public class ImageWS {
      */
     @WebMethod(operationName = "ListImages")
     public List ListImages() {
-        //TODO write your implementation code here:
+        try {
+            List<Imagen> l = new ArrayList<Imagen>();
+            ResultSet rs = DB_S.Select();
+            while (rs.next()) {
+                Imagen I = new Imagen();
+                I.SetID(rs.getInt("id_imagen"));
+                I.SetTitle(rs.getString("titulo"));
+                I.SetCreaDate(rs.getString("fecha_creacion"));
+                I.SetAuthor(rs.getString("autor"));
+                I.SetKeyWords(rs.getString("palabras_clave"));
+                l.add(I);
+            }
+            return l;
+        } catch(SQLException e)
+        {
+          System.err.println(e.getMessage());
+        }
         return null;
     }
 
@@ -48,8 +67,20 @@ public class ImageWS {
      * Web service operation
      */
     @WebMethod(operationName = "SearchbyId")
-    public ImageWS SearchbyId(@WebParam(name = "id") int id) {
-        //TODO write your implementation code here:
+    public Imagen SearchbyId(@WebParam(name = "id") int id) {
+        try {
+            ResultSet rs = DB_S.Select_id(id);
+            Imagen I = new Imagen();
+            I.SetID(rs.getInt("id_imagen"));
+            I.SetTitle(rs.getString("titulo"));
+            I.SetCreaDate(rs.getString("fecha_creacion"));
+            I.SetAuthor(rs.getString("autor"));
+            I.SetKeyWords(rs.getString("palabras_clave"));
+            return I;
+        } catch(SQLException e)
+        {
+          System.err.println(e.getMessage());
+        }
         return null;
     }
 
