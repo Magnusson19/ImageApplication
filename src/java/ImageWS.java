@@ -15,43 +15,51 @@ public class ImageWS {
     String author;
     String keywords;
     
-    void SetID (int id) {
+    public void ImageWS(int id, String title, String creaDate, String author, String keywords) {
         this.id = id;
-    }
-    
-    void SetTitle (String title) {
         this.title = title;
-    }
-    
-    void SetCreaDate (String creaDate) {
-        this.creaDate = creaDate;
-    }
-    
-    void SetAuthor (String author) {
         this.author = author;
-    }
-    
-    void SetKeyWords (String keywords) {
+        this.creaDate = creaDate;
         this.keywords = keywords;
     }
     
-    int GetID () {
+    public void SetID (int id) {
+        this.id = id;
+    }
+    
+    public void SetTitle (String title) {
+        this.title = title;
+    }
+    
+    public void SetCreaDate (String creaDate) {
+        this.creaDate = creaDate;
+    }
+    
+    public void SetAuthor (String author) {
+        this.author = author;
+    }
+    
+    public void SetKeyWords (String keywords) {
+        this.keywords = keywords;
+    }
+    
+    public int GetID () {
         return this.id;
     }
     
-    String GetTitle () {
+    public String GetTitle () {
         return this.title;
     }
     
-    String GetCreaDate () {
+    public String GetCreaDate () {
         return this.creaDate;
     }
     
-    String GetAuthor () {
+    public String GetAuthor () {
         return this.author;
     }
     
-    String GetKeyWords () {
+    public String GetKeyWords () {
         return this.keywords;
     }
 }
