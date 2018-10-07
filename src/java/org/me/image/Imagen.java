@@ -17,13 +17,27 @@ public class Imagen {
     String author;
     String keywords;
     
-    public void Imagen(int id, String title, String creaDate, String author, String keywords) {
+    /**
+     *
+     * @param id
+     * @param title
+     * @param creaDate
+     * @param author
+     * @param keywords
+     */
+    public Imagen(int id, String title, String creaDate, String author, String keywords) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.creaDate = creaDate;
         this.keywords = keywords;
     }
+
+    public Imagen() {
+    }
+    
+    
+    
     
     public void SetID (int id) {
         this.id = id;

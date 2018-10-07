@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class DB_Statements {
     Connection connection = null;
     
-    public void DB_Statements () {
+    public DB_Statements () {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
         } catch(SQLException e)
@@ -83,6 +83,19 @@ public class DB_Statements {
           System.err.println(e.getMessage());
         }
         return null;
+    }
+    
+    public void Close_DB () {
+        try
+          {
+            if(this.connection != null)
+              this.connection.close();
+          }
+          catch(SQLException e)
+          {
+            // connection close failed.
+            System.err.println(e.getMessage());
+          }
     }
     
 }

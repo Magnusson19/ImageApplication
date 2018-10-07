@@ -27,7 +27,10 @@ public class ImageWS {
      */
     @WebMethod(operationName = "RegisterImage")
     public int RegisterImage(@WebParam(name = "image") Imagen image) {
-        return DB_S.Insert(image);
+        DB_S = new DB_Statements();
+        int i = DB_S.Insert(image);
+        DB_S.Close_DB();
+        return i;
     }
 
     /**
@@ -35,7 +38,10 @@ public class ImageWS {
      */
     @WebMethod(operationName = "ModifyImage")
     public int ModifyImage(@WebParam(name = "image") Imagen image) {
-        return DB_S.Update(image);
+        DB_S = new DB_Statements();
+        int i = DB_S.Update(image);
+        DB_S.Close_DB();
+        return i;
     }
 
     /**
@@ -44,7 +50,8 @@ public class ImageWS {
     @WebMethod(operationName = "ListImages")
     public List ListImages() {
         try {
-            List<Imagen> l = new ArrayList<Imagen>();
+            DB_S = new DB_Statements();
+            List<Imagen> l = new ArrayList<>();
             ResultSet rs = DB_S.Select();
             while (rs.next()) {
                 Imagen I = new Imagen();
@@ -55,6 +62,7 @@ public class ImageWS {
                 I.SetKeyWords(rs.getString("palabras_clave"));
                 l.add(I);
             }
+            DB_S.Close_DB();
             return l;
         } catch(SQLException e)
         {
@@ -69,6 +77,7 @@ public class ImageWS {
     @WebMethod(operationName = "SearchbyId")
     public Imagen SearchbyId(@WebParam(name = "id") int id) {
         try {
+            DB_S = new DB_Statements();
             ResultSet rs = DB_S.Select_id(id);
             Imagen I = new Imagen();
             I.SetID(rs.getInt("id_imagen"));
@@ -76,6 +85,7 @@ public class ImageWS {
             I.SetCreaDate(rs.getString("fecha_creacion"));
             I.SetAuthor(rs.getString("autor"));
             I.SetKeyWords(rs.getString("palabras_clave"));
+            DB_S.Close_DB();
             return I;
         } catch(SQLException e)
         {
