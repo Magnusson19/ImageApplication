@@ -73,6 +73,8 @@ public class ImageWS {
 
     /**
      * Web service operation
+     * @param id
+     * @return 
      */
     @WebMethod(operationName = "SearchbyId")
     public Imagen SearchbyId(@WebParam(name = "id") int id) {
@@ -99,7 +101,25 @@ public class ImageWS {
      */
     @WebMethod(operationName = "SearchbyTitle")
     public List SearchbyTitle(@WebParam(name = "title") String title) {
-        //TODO write your implementation code here:
+         try {
+            DB_S = new DB_Statements();
+            List<Imagen> l = new ArrayList<>();
+            ResultSet rs = DB_S.SearchByTitle(title);
+            while (rs.next()) {
+                Imagen I = new Imagen();
+                I.SetID(rs.getInt("id_imagen"));
+                I.SetTitle(rs.getString("titulo"));
+                I.SetCreaDate(rs.getString("fecha_creacion"));
+                I.SetAuthor(rs.getString("autor"));
+                I.SetKeyWords(rs.getString("palabras_clave"));
+                l.add(I);
+            }
+            DB_S.Close_DB();
+            return l;
+        } catch(SQLException e)
+        {
+          System.err.println(e.getMessage());
+        }
         return null;
     }
 
@@ -108,7 +128,25 @@ public class ImageWS {
      */
     @WebMethod(operationName = "SearchbyCreaDate")
     public List SearchbyCreaDate(@WebParam(name = "creaDate") String creaDate) {
-        //TODO write your implementation code here:
+         try {
+            DB_S = new DB_Statements();
+            List<Imagen> l = new ArrayList<>();
+            ResultSet rs = DB_S.SearchByCreaDate(creaDate);
+            while (rs.next()) {
+                Imagen I = new Imagen();
+                I.SetID(rs.getInt("id_imagen"));
+                I.SetTitle(rs.getString("titulo"));
+                I.SetCreaDate(rs.getString("fecha_creacion"));
+                I.SetAuthor(rs.getString("autor"));
+                I.SetKeyWords(rs.getString("palabras_clave"));
+                l.add(I);
+            }
+            DB_S.Close_DB();
+            return l;
+        } catch(SQLException e)
+        {
+          System.err.println(e.getMessage());
+        }
         return null;
     }
 
@@ -117,7 +155,26 @@ public class ImageWS {
      */
     @WebMethod(operationName = "SearchbyAuthor")
     public List SearchbyAuthor(@WebParam(name = "author") String author) {
-        //TODO write your implementation code here:
+          
+        try {
+            DB_S = new DB_Statements();
+            List<Imagen> l = new ArrayList<>();
+            ResultSet rs = DB_S.SearchByAuthor(author);
+            while (rs.next()) {
+                Imagen I = new Imagen();
+                I.SetID(rs.getInt("id_imagen"));
+                I.SetTitle(rs.getString("titulo"));
+                I.SetCreaDate(rs.getString("fecha_creacion"));
+                I.SetAuthor(rs.getString("autor"));
+                I.SetKeyWords(rs.getString("palabras_clave"));
+                l.add(I);
+            }
+            DB_S.Close_DB();
+            return l;
+        } catch(SQLException e)
+        {
+          System.err.println(e.getMessage());
+        }
         return null;
     }
 
@@ -126,7 +183,25 @@ public class ImageWS {
      */
     @WebMethod(operationName = "SearchbyKeywords")
     public List SearchbyKeywords(@WebParam(name = "keywords") String keywords) {
-        //TODO write your implementation code here:
+          try {
+            DB_S = new DB_Statements();
+            List<Imagen> l = new ArrayList<>();
+            ResultSet rs = DB_S.SearchByKeywords(keywords);
+            while (rs.next()) {
+                Imagen I = new Imagen();
+                I.SetID(rs.getInt("id_imagen"));
+                I.SetTitle(rs.getString("titulo"));
+                I.SetCreaDate(rs.getString("fecha_creacion"));
+                I.SetAuthor(rs.getString("autor"));
+                I.SetKeyWords(rs.getString("palabras_clave"));
+                l.add(I);
+            }
+            DB_S.Close_DB();
+            return l;
+        } catch(SQLException e)
+        {
+          System.err.println(e.getMessage());
+        }
         return null;
     }
 
