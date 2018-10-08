@@ -85,6 +85,55 @@ public class DB_Statements {
         return null;
     }
     
+    public ResultSet SearchByTitle (String title) {
+        try {
+            PreparedStatement statement = this.connection.prepareStatement("select * from imagenes where titulo = ?");
+            statement.setString(1, title);
+            return statement.executeQuery();
+        } catch(SQLException e)
+        {
+          System.err.println(e.getMessage());
+        }
+        return null;
+    }
+     
+      public ResultSet SearchByCreaDate (String creaDate) {
+        try {
+            PreparedStatement statement = this.connection.prepareStatement("select * from imagenes where fecha_creacion = ?");
+            statement.setString(1, creaDate);
+            return statement.executeQuery();
+        } catch(SQLException e)
+        {
+          System.err.println(e.getMessage());
+        }
+        return null;
+    }
+      
+       public ResultSet SearchByAuthor (String author) {
+        
+           try {
+            PreparedStatement statement = this.connection.prepareStatement("select * from imagenes where autor = ?");
+            statement.setString(1, author);
+            return statement.executeQuery();
+        } catch(SQLException e)
+        {
+          System.err.println(e.getMessage());
+        }
+        return null;
+    }
+       
+        public ResultSet SearchByKeywords (String keywords) {
+        try {
+            PreparedStatement statement = this.connection.prepareStatement("select * from imagenes where palabras_clave = ?");
+            statement.setString(1, keywords);
+            return statement.executeQuery();
+        } catch(SQLException e)
+        {
+          System.err.println(e.getMessage());
+        }
+        return null;
+    }
+    
     public void Close_DB () {
         try
           {
