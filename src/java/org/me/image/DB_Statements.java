@@ -22,8 +22,9 @@ public class DB_Statements {
     
     public DB_Statements () {
         try {
+            Class.forName("org.sqlite.JDBC"); 
             connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
-        } catch(SQLException e)
+        } catch(Exception e)
         {
           System.err.println(e.getMessage());
         }
@@ -31,8 +32,13 @@ public class DB_Statements {
     
     public int Insert (Imagen image) {
         try {
-            PreparedStatement statement = this.connection.prepareStatement("insert into imagenes values (?,?,?,?,?)");
-            statement.setInt(1, image.GetID());
+            PreparedStatement statement = this.connection.prepareStatement("select max(id_imagen) from imagenes");
+            ResultSet rs = statement.executeQuery();
+            int id = 0;
+            if (rs.next()) id = rs.getInt("id_imagen");
+            else return 0;
+            statement = this.connection.prepareStatement("insert into imagenes values (?,?,?,?,?)");
+            statement.setInt(1, id);
             statement.setString(2, image.GetTitle());
             statement.setString(3, image.GetCreaDate());
             statement.setString(4, image.GetAuthor());
