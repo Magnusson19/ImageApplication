@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  *
  * @author nilmc
  */
-@WebService(serviceName = "ImageWS", wsdlLocation = "WEB-INF/wsdl/ImageWS.wsdl")
+@WebService(serviceName = "ImageWS")
 public class ImageWS {
 
     /**
@@ -61,16 +61,17 @@ public class ImageWS {
     @WebMethod(operationName = "ListImages")
     public List<Imagen> ListImages() {
         try {
+            Imagen I;
             //DB_Statements DB_S = new DB_Statements();
             Class.forName("org.sqlite.JDBC"); 
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
         
             List<Imagen> l = new ArrayList<>();
             //ResultSet rs = DB_S.Select();
             PreparedStatement statement = connection.prepareStatement("select * from imagenes");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Imagen I = new Imagen();
+                I = new Imagen();
                 I.SetID(rs.getInt("id_imagen"));
                 I.SetTitle(rs.getString("titulo"));
                 I.SetCreaDate(rs.getString("fecha_creacion"));
@@ -102,17 +103,22 @@ public class ImageWS {
     @WebMethod(operationName = "SearchbyId")
     public Imagen SearchbyId(@WebParam(name = "id") int id) {
         try {
-            DB_Statements DB_S = new DB_Statements();
-            ResultSet rs = DB_S.Select_id(id);
-            Imagen I = new Imagen();
+            Class.forName("org.sqlite.JDBC"); 
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            PreparedStatement statement = connection.prepareStatement("select * from imagenes where id_imagen = ?");
+             ResultSet rs = statement.executeQuery();
+            Imagen I;
+            I = new Imagen();
             I.SetID(rs.getInt("id_imagen"));
             I.SetTitle(rs.getString("titulo"));
             I.SetCreaDate(rs.getString("fecha_creacion"));
             I.SetAuthor(rs.getString("autor"));
             I.SetKeyWords(rs.getString("palabras_clave"));
-            DB_S.Close_DB();
+            
+            if(connection != null)
+              connection.close();
             return I;
-        } catch(SQLException e)
+        } catch(Exception e)
         {
           System.err.println(e.getMessage());
         }
@@ -127,11 +133,15 @@ public class ImageWS {
     @WebMethod(operationName = "SearchbyTitle")
     public List<Imagen> SearchbyTitle(@WebParam(name = "title") String title) {
          try {
-            DB_Statements DB_S = new DB_Statements();
+            Imagen I;
+             Class.forName("org.sqlite.JDBC"); 
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            PreparedStatement statement = connection.prepareStatement("select * from imagenes where titulo = ?");
+             ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
-            ResultSet rs = DB_S.SearchByTitle(title);
+            
             while (rs.next()) {
-                Imagen I = new Imagen();
+                I = new Imagen();
                 I.SetID(rs.getInt("id_imagen"));
                 I.SetTitle(rs.getString("titulo"));
                 I.SetCreaDate(rs.getString("fecha_creacion"));
@@ -139,9 +149,10 @@ public class ImageWS {
                 I.SetKeyWords(rs.getString("palabras_clave"));
                 l.add(I);
             }
-            DB_S.Close_DB();
+               if(connection != null)
+                    connection.close();
             return l;
-        } catch(SQLException e)
+        } catch(Exception e)
         {
           System.err.println(e.getMessage());
         }
@@ -156,11 +167,15 @@ public class ImageWS {
     @WebMethod(operationName = "SearchbyCreaDate")
     public List<Imagen> SearchbyCreaDate(@WebParam(name = "creaDate") String creaDate) {
          try {
-            DB_Statements DB_S = new DB_Statements();
+             Imagen I;
+            Class.forName("org.sqlite.JDBC"); 
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            PreparedStatement statement = connection.prepareStatement("select * from imagenes where fecha_creacion = ?");
+             ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
-            ResultSet rs = DB_S.SearchByCreaDate(creaDate);
+            
             while (rs.next()) {
-                Imagen I = new Imagen();
+                I = new Imagen();
                 I.SetID(rs.getInt("id_imagen"));
                 I.SetTitle(rs.getString("titulo"));
                 I.SetCreaDate(rs.getString("fecha_creacion"));
@@ -168,9 +183,10 @@ public class ImageWS {
                 I.SetKeyWords(rs.getString("palabras_clave"));
                 l.add(I);
             }
-            DB_S.Close_DB();
+              if(connection != null)
+                    connection.close();
             return l;
-        } catch(SQLException e)
+        } catch(Exception e)
         {
           System.err.println(e.getMessage());
         }
@@ -186,11 +202,15 @@ public class ImageWS {
     public List<Imagen> SearchbyAuthor(@WebParam(name = "author") String author) {
           
         try {
-            DB_Statements DB_S = new DB_Statements();
+            Imagen I;
+            Class.forName("org.sqlite.JDBC"); 
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+           PreparedStatement statement = connection.prepareStatement("select * from imagenes where autor = ?");
+             ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
-            ResultSet rs = DB_S.SearchByAuthor(author);
+           
             while (rs.next()) {
-                Imagen I = new Imagen();
+                I = new Imagen();
                 I.SetID(rs.getInt("id_imagen"));
                 I.SetTitle(rs.getString("titulo"));
                 I.SetCreaDate(rs.getString("fecha_creacion"));
@@ -198,9 +218,10 @@ public class ImageWS {
                 I.SetKeyWords(rs.getString("palabras_clave"));
                 l.add(I);
             }
-            DB_S.Close_DB();
+            if(connection != null)
+                    connection.close();
             return l;
-        } catch(SQLException e)
+        } catch(Exception e)
         {
           System.err.println(e.getMessage());
         }
@@ -215,11 +236,15 @@ public class ImageWS {
     @WebMethod(operationName = "SearchbyKeywords")
     public List<Imagen> SearchbyKeywords(@WebParam(name = "keywords") String keywords) {
           try {
-            DB_Statements DB_S = new DB_Statements();
+              Imagen I;
+              Class.forName("org.sqlite.JDBC"); 
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+           PreparedStatement statement = connection.prepareStatement("select * from imagenes where palabras_clave = ?");
+             ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
-            ResultSet rs = DB_S.SearchByKeywords(keywords);
+           
             while (rs.next()) {
-                Imagen I = new Imagen();
+                I = new Imagen();
                 I.SetID(rs.getInt("id_imagen"));
                 I.SetTitle(rs.getString("titulo"));
                 I.SetCreaDate(rs.getString("fecha_creacion"));
@@ -227,9 +252,10 @@ public class ImageWS {
                 I.SetKeyWords(rs.getString("palabras_clave"));
                 l.add(I);
             }
-            DB_S.Close_DB();
+                        if(connection != null)
+                    connection.close();
             return l;
-        } catch(SQLException e)
+        } catch(Exception e)
         {
           System.err.println(e.getMessage());
         }
