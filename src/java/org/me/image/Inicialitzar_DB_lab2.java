@@ -45,7 +45,7 @@ public class Inicialitzar_DB_lab2 extends HttpServlet {
         try {
             Class.forName("org.sqlite.JDBC");   
           
-          //connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB1.db");
+          //connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
           connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
           
           Statement statement = connection.createStatement();

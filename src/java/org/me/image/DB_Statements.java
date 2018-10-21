@@ -23,6 +23,7 @@ public class DB_Statements {
     public DB_Statements () {
         try {
             Class.forName("org.sqlite.JDBC"); 
+            //connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
             connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
         } catch(Exception e)
         {
@@ -38,7 +39,7 @@ public class DB_Statements {
             if (rs.next()) id = rs.getInt("id_imagen");
             else return 0;
             statement = this.connection.prepareStatement("insert into imagenes values (?,?,?,?,?)");
-            statement.setInt(1, id);
+            statement.setInt(1, id+1);
             statement.setString(2, image.GetTitle());
             statement.setString(3, image.GetCreaDate());
             statement.setString(4, image.GetAuthor());

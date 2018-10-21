@@ -64,7 +64,8 @@ public class ImageWS {
             Imagen I;
             //DB_Statements DB_S = new DB_Statements();
             Class.forName("org.sqlite.JDBC"); 
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
         
             List<Imagen> l = new ArrayList<>();
             //ResultSet rs = DB_S.Select();
@@ -104,7 +105,8 @@ public class ImageWS {
     public Imagen SearchbyId(@WebParam(name = "id") int id) {
         try {
             Class.forName("org.sqlite.JDBC"); 
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
             PreparedStatement statement = connection.prepareStatement("select * from imagenes where id_imagen = ?");
              ResultSet rs = statement.executeQuery();
             Imagen I;
@@ -135,7 +137,8 @@ public class ImageWS {
          try {
             Imagen I;
              Class.forName("org.sqlite.JDBC"); 
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
             PreparedStatement statement = connection.prepareStatement("select * from imagenes where titulo = ?");
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
@@ -169,7 +172,8 @@ public class ImageWS {
          try {
              Imagen I;
             Class.forName("org.sqlite.JDBC"); 
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
             PreparedStatement statement = connection.prepareStatement("select * from imagenes where fecha_creacion = ?");
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
@@ -204,7 +208,8 @@ public class ImageWS {
         try {
             Imagen I;
             Class.forName("org.sqlite.JDBC"); 
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
            PreparedStatement statement = connection.prepareStatement("select * from imagenes where autor = ?");
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
@@ -238,7 +243,8 @@ public class ImageWS {
           try {
               Imagen I;
               Class.forName("org.sqlite.JDBC"); 
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+              //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
            PreparedStatement statement = connection.prepareStatement("select * from imagenes where palabras_clave = ?");
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
