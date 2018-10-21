@@ -62,13 +62,11 @@ public class ImageWS {
     public List<Imagen> ListImages() {
         try {
             Imagen I;
-            //DB_Statements DB_S = new DB_Statements();
             Class.forName("org.sqlite.JDBC"); 
             //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
             Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
         
             List<Imagen> l = new ArrayList<>();
-            //ResultSet rs = DB_S.Select();
             PreparedStatement statement = connection.prepareStatement("select * from imagenes");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -79,13 +77,10 @@ public class ImageWS {
                 I.SetAuthor(rs.getString("autor"));
                 I.SetKeyWords(rs.getString("palabras_clave"));
                 l.add(I);
-                //System.out.println(l.get(l.size()-1).GetAuthor());
             }
             if(connection != null)
               connection.close();
-            //DB_S.Close_DB();
             if (l.size() > 0) {
-                System.out.println(l.get(l.size()-1).GetAuthor());
                 return l;
             }
             else return null;
@@ -108,6 +103,7 @@ public class ImageWS {
             //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
             Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
             PreparedStatement statement = connection.prepareStatement("select * from imagenes where id_imagen = ?");
+            statement.setInt(1, id);
              ResultSet rs = statement.executeQuery();
             Imagen I;
             I = new Imagen();
@@ -140,6 +136,7 @@ public class ImageWS {
             //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
             Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
             PreparedStatement statement = connection.prepareStatement("select * from imagenes where titulo = ?");
+            statement.setString(1, title);
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
             
@@ -175,6 +172,7 @@ public class ImageWS {
             //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
             Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
             PreparedStatement statement = connection.prepareStatement("select * from imagenes where fecha_creacion = ?");
+            statement.setString(1, creaDate);
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
             
@@ -211,6 +209,7 @@ public class ImageWS {
             //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
             Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
            PreparedStatement statement = connection.prepareStatement("select * from imagenes where autor = ?");
+           statement.setString(1, author);
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
            
@@ -246,6 +245,7 @@ public class ImageWS {
               //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
             Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
            PreparedStatement statement = connection.prepareStatement("select * from imagenes where palabras_clave = ?");
+           statement.setString(1, keywords);
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
            
