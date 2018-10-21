@@ -11,11 +11,11 @@ package org.me.image;
  * @author nilmc
  */
 public class Imagen {
-    int id;
-    String title;
-    String creaDate;
-    String author;
-    String keywords;
+    public int id;
+    public String title;
+    public String creaDate;
+    public String author;
+    public String keywords;
     
     /**
      *
