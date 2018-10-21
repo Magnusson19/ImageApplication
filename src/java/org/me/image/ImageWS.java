@@ -267,5 +267,44 @@ public class ImageWS {
         }
         return null;
     }
+
+    /**
+     * Web service operation
+     * @param author
+     * @param title
+     * @return 
+     */
+    @WebMethod(operationName = "SearchByAuthor_Title")
+    public List<Imagen> SearchByAuthor_Title(@WebParam(name = "author") String author, @WebParam(name = "title") String title) {
+        try {
+              Imagen I;
+              Class.forName("org.sqlite.JDBC"); 
+              //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
+           PreparedStatement statement = connection.prepareStatement("select * from imagenes where autor = ? and titulo = ?");
+           statement.setString(1, author);
+           statement.setString(2, title);
+             ResultSet rs = statement.executeQuery();
+            List<Imagen> l = new ArrayList<>();
+           
+            while (rs.next()) {
+                I = new Imagen();
+                I.SetID(rs.getInt("id_imagen"));
+                I.SetTitle(rs.getString("titulo"));
+                I.SetCreaDate(rs.getString("fecha_creacion"));
+                I.SetAuthor(rs.getString("autor"));
+                I.SetKeyWords(rs.getString("palabras_clave"));
+                l.add(I);
+            }
+                        if(connection != null)
+                    connection.close();
+            return l;
+        } catch(Exception e)
+        {
+          System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
     
 }
