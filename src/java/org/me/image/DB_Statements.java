@@ -36,7 +36,7 @@ public class DB_Statements {
             PreparedStatement statement = this.connection.prepareStatement("select max(id_imagen) from imagenes");
             ResultSet rs = statement.executeQuery();
             int id = 0;
-            if (rs.next()) id = rs.getInt("id_imagen");
+            if (rs.next()) id = rs.getInt(1);
             else return 0;
             statement = this.connection.prepareStatement("insert into imagenes values (?,?,?,?,?)");
             statement.setInt(1, id+1);
