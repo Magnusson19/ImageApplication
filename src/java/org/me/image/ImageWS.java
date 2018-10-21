@@ -5,6 +5,7 @@
  */
 package org.me.image;
 
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,22 +13,29 @@ import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 
 /**
  *
  * @author nilmc
  */
-@WebService(serviceName = "ImageWS")
+@WebService(serviceName = "ImageWS", wsdlLocation = "WEB-INF/wsdl/ImageWS.wsdl")
 public class ImageWS {
-    
-    DB_Statements DB_S = new DB_Statements();
 
     /**
      * Web service operation
+     * @param image
+     * @return 
      */
     @WebMethod(operationName = "RegisterImage")
     public int RegisterImage(@WebParam(name = "image") Imagen image) {
-        DB_S = new DB_Statements();
+        DB_Statements DB_S = new DB_Statements();
         int i = DB_S.Insert(image);
         DB_S.Close_DB();
         return i;
@@ -35,10 +43,12 @@ public class ImageWS {
 
     /**
      * Web service operation
+     * @param image
+     * @return 
      */
     @WebMethod(operationName = "ModifyImage")
     public int ModifyImage(@WebParam(name = "image") Imagen image) {
-        DB_S = new DB_Statements();
+        DB_Statements DB_S = new DB_Statements();
         int i = DB_S.Update(image);
         DB_S.Close_DB();
         return i;
@@ -46,13 +56,19 @@ public class ImageWS {
 
     /**
      * Web service operation
+     * @return 
      */
     @WebMethod(operationName = "ListImages")
-    public List ListImages() {
+    public List<Imagen> ListImages() {
         try {
-            DB_S = new DB_Statements();
+            //DB_Statements DB_S = new DB_Statements();
+            Class.forName("org.sqlite.JDBC"); 
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
+        
             List<Imagen> l = new ArrayList<>();
-            ResultSet rs = DB_S.Select();
+            //ResultSet rs = DB_S.Select();
+            PreparedStatement statement = connection.prepareStatement("select * from imagenes");
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Imagen I = new Imagen();
                 I.SetID(rs.getInt("id_imagen"));
@@ -61,10 +77,17 @@ public class ImageWS {
                 I.SetAuthor(rs.getString("autor"));
                 I.SetKeyWords(rs.getString("palabras_clave"));
                 l.add(I);
+                //System.out.println(l.get(l.size()-1).GetAuthor());
             }
-            DB_S.Close_DB();
-            return l;
-        } catch(SQLException e)
+            if(connection != null)
+              connection.close();
+            //DB_S.Close_DB();
+            if (l.size() > 0) {
+                System.out.println(l.get(l.size()-1).GetAuthor());
+                return l;
+            }
+            else return null;
+        } catch(Exception e)
         {
           System.err.println(e.getMessage());
         }
@@ -79,7 +102,7 @@ public class ImageWS {
     @WebMethod(operationName = "SearchbyId")
     public Imagen SearchbyId(@WebParam(name = "id") int id) {
         try {
-            DB_S = new DB_Statements();
+            DB_Statements DB_S = new DB_Statements();
             ResultSet rs = DB_S.Select_id(id);
             Imagen I = new Imagen();
             I.SetID(rs.getInt("id_imagen"));
@@ -98,11 +121,13 @@ public class ImageWS {
 
     /**
      * Web service operation
+     * @param title
+     * @return 
      */
     @WebMethod(operationName = "SearchbyTitle")
-    public List SearchbyTitle(@WebParam(name = "title") String title) {
+    public List<Imagen> SearchbyTitle(@WebParam(name = "title") String title) {
          try {
-            DB_S = new DB_Statements();
+            DB_Statements DB_S = new DB_Statements();
             List<Imagen> l = new ArrayList<>();
             ResultSet rs = DB_S.SearchByTitle(title);
             while (rs.next()) {
@@ -125,11 +150,13 @@ public class ImageWS {
 
     /**
      * Web service operation
+     * @param creaDate
+     * @return 
      */
     @WebMethod(operationName = "SearchbyCreaDate")
-    public List SearchbyCreaDate(@WebParam(name = "creaDate") String creaDate) {
+    public List<Imagen> SearchbyCreaDate(@WebParam(name = "creaDate") String creaDate) {
          try {
-            DB_S = new DB_Statements();
+            DB_Statements DB_S = new DB_Statements();
             List<Imagen> l = new ArrayList<>();
             ResultSet rs = DB_S.SearchByCreaDate(creaDate);
             while (rs.next()) {
@@ -152,12 +179,14 @@ public class ImageWS {
 
     /**
      * Web service operation
+     * @param author
+     * @return 
      */
     @WebMethod(operationName = "SearchbyAuthor")
-    public List SearchbyAuthor(@WebParam(name = "author") String author) {
+    public List<Imagen> SearchbyAuthor(@WebParam(name = "author") String author) {
           
         try {
-            DB_S = new DB_Statements();
+            DB_Statements DB_S = new DB_Statements();
             List<Imagen> l = new ArrayList<>();
             ResultSet rs = DB_S.SearchByAuthor(author);
             while (rs.next()) {
@@ -180,11 +209,13 @@ public class ImageWS {
 
     /**
      * Web service operation
+     * @param keywords
+     * @return 
      */
     @WebMethod(operationName = "SearchbyKeywords")
-    public List SearchbyKeywords(@WebParam(name = "keywords") String keywords) {
+    public List<Imagen> SearchbyKeywords(@WebParam(name = "keywords") String keywords) {
           try {
-            DB_S = new DB_Statements();
+            DB_Statements DB_S = new DB_Statements();
             List<Imagen> l = new ArrayList<>();
             ResultSet rs = DB_S.SearchByKeywords(keywords);
             while (rs.next()) {
@@ -204,6 +235,5 @@ public class ImageWS {
         }
         return null;
     }
-
     
 }
