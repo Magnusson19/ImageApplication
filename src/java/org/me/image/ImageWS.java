@@ -135,8 +135,8 @@ public class ImageWS {
              Class.forName("org.sqlite.JDBC"); 
             //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
             Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
-            PreparedStatement statement = connection.prepareStatement("select * from imagenes where titulo = ?");
-            statement.setString(1, title);
+            PreparedStatement statement = connection.prepareStatement("select * from imagenes where titulo like ?");
+            statement.setString(1, "%" + title + "%");
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
             
@@ -208,8 +208,8 @@ public class ImageWS {
             Class.forName("org.sqlite.JDBC"); 
             //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
             Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
-           PreparedStatement statement = connection.prepareStatement("select * from imagenes where autor = ?");
-           statement.setString(1, author);
+           PreparedStatement statement = connection.prepareStatement("select * from imagenes where autor like ?");
+           statement.setString(1, "%" + author + "%");
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
            
@@ -244,8 +244,8 @@ public class ImageWS {
               Class.forName("org.sqlite.JDBC"); 
               //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
             Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
-           PreparedStatement statement = connection.prepareStatement("select * from imagenes where palabras_clave = ?");
-           statement.setString(1, keywords);
+           PreparedStatement statement = connection.prepareStatement("select * from imagenes where palabras_clave like ?");
+           statement.setString(1, "%" + keywords + "%");
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
            
@@ -281,9 +281,9 @@ public class ImageWS {
               Class.forName("org.sqlite.JDBC"); 
               //Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\myPC\\Desktop\\LAB2.db");
             Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nilmc\\Desktop\\LAB2.db");
-           PreparedStatement statement = connection.prepareStatement("select * from imagenes where autor = ? and titulo = ?");
-           statement.setString(1, author);
-           statement.setString(2, title);
+           PreparedStatement statement = connection.prepareStatement("select * from imagenes where autor like ? and titulo like ?");
+           statement.setString(1, "%" + author + "%");
+           statement.setString(2, "%" + title + "%");
              ResultSet rs = statement.executeQuery();
             List<Imagen> l = new ArrayList<>();
            
