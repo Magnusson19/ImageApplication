@@ -38,7 +38,7 @@ public class ImageWS {
         DB_Statements DB_S = new DB_Statements();
         int i = DB_S.Insert(image);
         DB_S.Close_DB();
-        return i;
+        return i; 
     }
 
     /**
